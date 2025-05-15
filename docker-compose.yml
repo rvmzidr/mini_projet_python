@@ -1,0 +1,97 @@
+
+services:
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  # Redis for caching
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis-data:/data
+
+  # PostgreSQL for FastAPI backend
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bookdb
+    command: [ "postgres", "-c", "listen_addresses=*" ]
+
+  # Spring Boot microservice
+  spring-boot:
+    build:
+      context: ./backend/spring-boot
+      dockerfile: Dockerfile
+    container_name: spring-boot
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongodb:27017/studentdb?authSource=admin
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+
+  # FastAPI service
+  fastapi:
+    build:
+      context: ./backend/fastapi
+      dockerfile: Dockerfile
+    container_name: fastapi
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/bookdb
+      GROQ_API_KEY: ${GROQ_API_KEY}
+
+
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile.nextjs
+    container_name: nextjs
+    ports:
+      - "3000:3000"
+    depends_on:
+      - spring-boot
+      - fastapi
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+
+      # Angular admin frontend
+ # angular:
+      #  build:
+      #   context: ./admin-frontend/angular
+    #   dockerfile: Dockerfile
+    # container_name: angular
+      #  ports:
+    #   - "4200:80"
+      # depends_on:
+      #    - spring-boot
+    #   - fastapi
+
+volumes:
+  mongo-data:
+  redis-data:
+  postgres-data:

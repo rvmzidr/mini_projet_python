@@ -1,0 +1,11 @@
+src/test/
+*.iml
+*.jar
+*.war
+logs/
+.gradle/
+build/
+out/
+.settings/
+.project
+.classpath

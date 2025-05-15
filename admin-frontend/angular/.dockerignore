@@ -1,0 +1,12 @@
+dist/
+e2e/
+*.spec.ts
+*.map
+*.ngsummary.json
+*.ngfactory.ts
+*.metadata.json
+aot/
+**/*.js
+**/*.js.map
+.cache/
+.angular/

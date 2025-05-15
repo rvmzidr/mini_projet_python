@@ -1,0 +1,14 @@
+<div class="min-h-screen flex flex-column surface-ground">
+  <div class="surface-overlay shadow-2 py-3 px-6 flex align-items-center justify-content-between relative lg:static">
+    <div class="flex align-items-center">
+      <i class="pi pi-graduation-cap text-2xl mr-2"></i>
+      <span class="text-xl font-medium">EduConnect Admin</span>
+    </div>
+    <p-menubar [model]="items" styleClass="surface-card"></p-menubar>
+  </div>
+  <div class="p-4 flex flex-column flex-auto">
+    <div class="border-2 border-dashed surface-border border-round surface-card p-4 flex-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

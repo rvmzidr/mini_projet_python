@@ -1,0 +1,122 @@
+<div class="grid">
+  <div class="col-12">
+    <h1 class="text-3xl font-bold">Admin Dashboard</h1>
+    <p class="text-lg text-700">Overview of your educational platform</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="col-12 md:col-6 lg:col-3">
+    <p-card styleClass="h-full">
+      <div class="flex flex-column align-items-center">
+        <span class="p-3 bg-primary-100 border-circle mb-3">
+          <i class="pi pi-users text-primary text-2xl"></i>
+        </span>
+        <span class="text-4xl font-bold">248</span>
+        <span class="text-lg mb-2">Total Students</span>
+        <span class="text-green-500 flex align-items-center">
+          <i class="pi pi-arrow-up mr-1"></i>
+          <span>12% from last month</span>
+        </span>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="col-12 md:col-6 lg:col-3">
+    <p-card styleClass="h-full">
+      <div class="flex flex-column align-items-center">
+        <span class="p-3 bg-orange-100 border-circle mb-3">
+          <i class="pi pi-book text-orange-500 text-2xl"></i>
+        </span>
+        <span class="text-4xl font-bold">42</span>
+        <span class="text-lg mb-2">Active Courses</span>
+        <span class="text-green-500 flex align-items-center">
+          <i class="pi pi-arrow-up mr-1"></i>
+          <span>5 new this month</span>
+        </span>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="col-12 md:col-6 lg:col-3">
+    <p-card styleClass="h-full">
+      <div class="flex flex-column align-items-center">
+        <span class="p-3 bg-blue-100 border-circle mb-3">
+          <i class="pi pi-sitemap text-blue-500 text-2xl"></i>
+        </span>
+        <span class="text-4xl font-bold">5</span>
+        <span class="text-lg mb-2">Departments</span>
+        <span class="text-blue-500 flex align-items-center">
+          <i class="pi pi-check-circle mr-1"></i>
+          <span>All active</span>
+        </span>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="col-12 md:col-6 lg:col-3">
+    <p-card styleClass="h-full">
+      <div class="flex flex-column align-items-center">
+        <span class="p-3 bg-green-100 border-circle mb-3">
+          <i class="pi pi-bookmark text-green-500 text-2xl"></i>
+        </span>
+        <span class="text-4xl font-bold">126</span>
+        <span class="text-lg mb-2">Total Bookmarks</span>
+        <span class="text-green-500 flex align-items-center">
+          <i class="pi pi-arrow-up mr-1"></i>
+          <span>24% increase</span>
+        </span>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Charts -->
+  <div class="col-12 lg:col-6">
+    <p-card header="Student Registrations" styleClass="h-full">
+      <p-chart type="line" [data]="studentsData" [options]="{ responsive: true }"></p-chart>
+    </p-card>
+  </div>
+
+  <div class="col-12 lg:col-6">
+    <p-card header="Course Enrollments" styleClass="h-full">
+      <p-chart type="bar" [data]="courseEnrollments" [options]="{ responsive: true }"></p-chart>
+    </p-card>
+  </div>
+
+  <div class="col-12 md:col-6">
+    <p-card header="Department Distribution" styleClass="h-full">
+      <p-chart type="pie" [data]="departmentDistribution" [options]="{ responsive: true }"></p-chart>
+    </p-card>
+  </div>
+
+  <div class="col-12 md:col-6">
+    <p-card header="Course Categories" styleClass="h-full">
+      <p-chart type="doughnut" [data]="coursesData" [options]="{ responsive: true }"></p-chart>
+    </p-card>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="col-12">
+    <p-card header="Recent Activity">
+      <p-table [value]="recentActivity" [paginator]="true" [rows]="5" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Activity</th>
+            <th>Details</th>
+            <th>Time</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-activity>
+          <tr>
+            <td>{{ activity.action }}</td>
+            <td>{{ activity.details }}</td>
+            <td>{{ activity.time }}</td>
+            <td>
+              <button pButton icon="pi pi-eye" class="p-button-text p-button-sm"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
